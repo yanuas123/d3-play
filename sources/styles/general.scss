@@ -1,0 +1,54 @@
+.button {
+  display: block;
+  padding: 10px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  background-color: #5e5e5e;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #919191;
+  }
+
+  &:disabled {
+    opacity: 60%;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__title {
+    width: 100%;
+    margin: 0;
+    font-size: 24px;
+    font-weight: normal;
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
+
+.page-link {
+  display: inline-block;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: #324ea8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

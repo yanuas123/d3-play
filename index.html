@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Abstractions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="./dist/app.css" />
+    <link rel="stylesheet" type="text/css" href="./dist/index.css" />
+  </head>
+
+  <body>
+    <main class="main">
+      <div class="home-page hidden" data-id="home-page">
+        <section class="section" data-id="section">
+          <h2 class="section__title" data-id="section-title">Title</h2>
+
+          <div class="section__content" data-id="section-content">
+            <button class="page-link" data-id="page-link">Page link</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="sample-page hidden" data-id="sample-page">
+        <div class="sample-page__header">
+          <h1 class="sample-page__title" data-id="page-title">Page title</h1>
+
+          <div class="sample-page__router">
+            <button class="button" data-id="home-button">Home</button>
+            <button class="button" data-id="previous-page-button">Prev</button>
+            <button class="button" data-id="next-page-button">Next</button>
+          </div>
+        </div>
+
+        <div class="sample-page__content" data-id="page-content"></div>
+      </div>
+    </main>
+
+    <script type="module" src="./dist/app.js"></script>
+  </body>
+</html>

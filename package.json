@@ -1,0 +1,21 @@
+{
+  "name": "abstractions",
+  "license": "CC BY 4.0",
+  "type": "module",
+  "scripts": {
+    "serve": "node serve.config.mjs",
+    "build": "node build.config.mjs"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "browserslist": "^4.23.0",
+    "esbuild": "0.21.4",
+    "esbuild-plugin-browserslist": "^0.12.1",
+    "esbuild-sass-plugin": "^3.3.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "rxjs": "^7.8.1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "files": ["./sources/app.ts"],
+  "compilerOptions": {
+    "paths": {
+      "@samples/*": ["./sources/samples/*"]
+    },
+    "types": ["@types/d3"],
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "rootDir": "./sources",
+    "outDir": "./dist",
+    "strictNullChecks": false,
+    "strict": false,
+    "strictPropertyInitialization": false
+  }
+}
