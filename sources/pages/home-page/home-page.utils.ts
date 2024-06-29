@@ -1,6 +1,6 @@
 import { sharedIdentifiers } from "../../constants/general";
 import { SAMPLE_ROUTING_PARAMETER_KEY } from "../../constants/routing";
-import { SampleIdentifier, samplesTitles } from "@samples/samples";
+import { SampleIdentifier, samplesTitles } from "@samples/constants";
 import { ApplyDataFn } from "../../models/general";
 import { LinkTemplateData, SectionTemplateData } from "./home-page.models";
 import { Template, getElement, setElementText } from "../../utils/general";
@@ -40,5 +40,5 @@ export function applySectionDataFnFactory(router: Router): ApplyDataFn<HTMLEleme
 }
 
 export const applyLinkDataFn: ApplyDataFn<HTMLButtonElement, LinkTemplateData> = (template, data) => {
-  setElementText(data.title, template);
+  setElementText(data.title.toLowerCase(), template);
 };

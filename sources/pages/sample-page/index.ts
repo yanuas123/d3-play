@@ -2,8 +2,9 @@ import { Page, Router } from "../../models/routing";
 import { elementClassToggler, getElement, setElementText } from "../../utils/general";
 import { featuredIdentifiers, HIDDEN_CLASS } from "../../constants/general";
 import { SAMPLE_ROUTING_PARAMETER_KEY, Routes } from "../../constants/routing";
-import { SampleIdentifier, sampleIdentifiers, samplesContents, samplesTitles } from "@samples/samples";
+import { SampleIdentifier, sampleIdentifiers, samplesContents, samplesTitles } from "@samples/constants";
 import { fromEvent } from "rxjs";
+import { Sample } from "@samples/sample";
 
 export class SamplePage implements Page {
   private sampleIdentifier: SampleIdentifier;
@@ -14,6 +15,7 @@ export class SamplePage implements Page {
   private nextButton: HTMLButtonElement;
   private previousButton: HTMLButtonElement;
   private content: HTMLElement;
+  private sample: Sample;
 
   private hiddenClass: ReturnType<typeof elementClassToggler>;
 
@@ -105,10 +107,11 @@ export class SamplePage implements Page {
   }
 
   private addPageContent(): void {
-    samplesContents[this.sampleIdentifier](this.content);
+    this.sample = new samplesContents[this.sampleIdentifier](this.content);
   }
 
   private removePageContent(): void {
     this.content.replaceChildren();
+    this.sample.destroy();
   }
 }

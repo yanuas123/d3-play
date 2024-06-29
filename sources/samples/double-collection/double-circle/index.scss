@@ -1,0 +1,13 @@
+@use '../constants' as *;
+
+.double-circle {
+  &__thin-circle {
+    stroke: $primary-color;
+    fill: none;
+  }
+
+  &__wide-circle {
+    stroke: $back-color;
+    fill: none;
+  }
+}

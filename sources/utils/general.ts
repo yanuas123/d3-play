@@ -1,5 +1,7 @@
 import { ID_ATTRIBUTE_NAME } from '../constants/general';
 import { ApplyDataFn } from '../models/general';
+import { getDifferenceMultiplier } from './math';
+import { getAxisForContain } from './positioning';
 
 export function getElement<T extends HTMLElement = any>(id: string, ancestor?: HTMLElement): T {
   const selector: string = `[${ID_ATTRIBUTE_NAME}="${id}"]`;
@@ -59,4 +61,20 @@ export class Template<T extends HTMLElement = any, Data = any> {
   private cloneTemplate(): T {
     return this.template.cloneNode(true) as T;
   }
+}
+
+export function responsive<T extends { [key: string]: number } = any>(
+  values: T,
+  size: [number, number],
+  container: [number, number]
+): T {
+  const targetAxis: 0 | 1 = getAxisForContain(container, size);
+  const multiplier: number = getDifferenceMultiplier(container[targetAxis], size[targetAxis]);
+
+  return Object.keys(values).reduce((acc, key: string) => {
+    return {
+      ...acc,
+      [key]: values[key] * multiplier
+    };
+  }, {} as T);
 }
