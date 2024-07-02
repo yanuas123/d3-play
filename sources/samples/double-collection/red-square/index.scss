@@ -1,0 +1,6 @@
+@use '../constants' as *;
+
+.red-square {
+  stroke: $primary-color;
+  fill: none;
+}

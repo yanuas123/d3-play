@@ -8,3 +8,13 @@ export function getAngle(location: [number, number], origin: [number, number]): 
 export function getDifferenceMultiplier(value1: number, value2: number): number {
   return Math.floor(value1 / value2);
 }
+
+export function getCenterOffset(value: number, base: number): number {
+  const baseCenter: number = base / 2;
+
+  if (value > baseCenter) {
+    return value - baseCenter;
+  }
+
+  return baseCenter - value;
+}

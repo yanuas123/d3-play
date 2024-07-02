@@ -5,6 +5,7 @@ import { SampleIdentifier } from "@samples/constants";
 export const sectionsData: SectionTemplateData[] = [{
   title: 'Double collection',
   links: createLinksDataFromSampleIdentifiers([
-    SampleIdentifier.doubleCircle
+    SampleIdentifier.doubleCircle,
+    SampleIdentifier.redSquare
   ])
 }];
