@@ -6,10 +6,13 @@ import { CursorEvent } from '../../../models/events';
 import { Sample } from '../../sample';
 import { responsive } from '../../../utils/general';
 import * as d3 from 'd3';
-import { getCenterOffset } from '../../../utils/math';
+import { getFromCenterOffset } from '../../../utils/math';
+import { calculateAnchorLocation } from '../../../utils/positioning';
+import { Anchor } from '../../../constants/positioning';
 
 export class RedSquare extends Sample {
-  private size: typeof size;
+  private readonly anchorLocation: [number, number];
+  private readonly size: typeof size;
 
   private square: RectSelection;
 
@@ -26,6 +29,8 @@ export class RedSquare extends Sample {
       [this.svgWidth, this.svgHeight]
     );
 
+    this.anchorLocation = calculateAnchorLocation(Anchor.center, [0, 0], [this.width, this.height]);
+
     this.createRoundingScale();
 
     this.createSquare();
@@ -34,7 +39,7 @@ export class RedSquare extends Sample {
   }
 
   private createRoundingScale(): void {
-    this.roundingScale = d3.scaleLinear([this.width / 2, 0], [0, this.size.stroke]);
+    this.roundingScale = d3.scaleLinear([this.anchorLocation[0], 0], [0, this.size.stroke]);
   }
 
   private createSquare(): void {
@@ -46,20 +51,20 @@ export class RedSquare extends Sample {
 
   private handleCursorMove(): void {
     this.cursorMove$.subscribe((event: CursorEvent) => {
-      this.round([event.x, event.y]);
+      this.roundSquare([event.x, event.y]);
     });
   }
 
-  private round(cursorLocation: [number, number]): void {
-    const centerDistance: number = this.getCenterDistance(cursorLocation);
-    const radius: number = this.roundingScale(centerDistance);
+  private roundSquare(cursorLocation: [number, number]): void {
+    const fromCenterDistance: number = this.getFromCenterDistance(cursorLocation);
+    const radius: number = this.roundingScale(fromCenterDistance);
 
     this.square.attr('rx', radius);
   }
 
-  private getCenterDistance(location: [number, number]): number {
-    let xDistance: number = getCenterOffset(location[0], this.width);
-    let yDistance: number = getCenterOffset(location[1], this.height);
+  private getFromCenterDistance(location: [number, number]): number {
+    let xDistance: number = getFromCenterOffset(location[0], this.width);
+    let yDistance: number = getFromCenterOffset(location[1], this.height);
 
     return xDistance > yDistance ? xDistance : yDistance;
   }

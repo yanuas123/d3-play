@@ -3,15 +3,16 @@ import { calculateAnchorLocation, calculateAnchorX, calculateX } from '../../../
 import './index.scss';
 import { Anchor } from '../../../constants/positioning';
 import { circleFactory } from '../../../utils/shapes';
-import { size } from './constants';
+import { DOUBLE_CIRCLE_ANCHOR, WIDE_CIRCLE_ANCHOR, size } from './constants';
 import { CursorEvent } from '../../../models/events';
 import { getAngle } from '../../../utils/math';
 import { Sample } from '../../sample';
 import { responsive } from '../../../utils/general';
+import { defineOrigin } from '../../../utils/transformation';
 
 export class DoubleCircle extends Sample {
-  private anchorLocation: [number, number];
-  private size: typeof size;
+  private readonly anchorLocation: [number, number];
+  private readonly size: typeof size;
 
   private wideCircle: CircleSelection;
 
@@ -26,7 +27,7 @@ export class DoubleCircle extends Sample {
       [this.svgWidth, this.svgHeight]
     );
 
-    this.anchorLocation = this.createDoubleCircleAnchorLocation();
+    this.anchorLocation = calculateAnchorLocation(Anchor.center, [0, 0], [this.width, this.height]);
 
     this.createWideCircle();
     this.createDoubleCircle();
@@ -34,35 +35,37 @@ export class DoubleCircle extends Sample {
     this.handleCursorMove();
   }
 
+  private get doubleCircleAnchorLocation(): [number, number] {
+    return this.anchorLocation;
+  }
+
+  private get wideCircleAnchorLocation(): [number, number] {
+    const smallCircleXLocation: number = calculateX(
+      DOUBLE_CIRCLE_ANCHOR,
+      this.doubleCircleAnchorLocation[0],
+      this.size.smallDoubleCircle
+    );
+    const xLocation: number = smallCircleXLocation + this.size.smallDoubleCircle;
+    const xAnchorLocation: number = calculateAnchorX(WIDE_CIRCLE_ANCHOR, xLocation, this.size.wideCircle);
+
+    return [xAnchorLocation, this.doubleCircleAnchorLocation[1]];
+  }
+
   private createDoubleCircle(): void {
     const group: GroupSelection = this.group.append('g').classed('double-circle__thin-circle', true);
-    const anchorLocation: [number, number] = this.createDoubleCircleAnchorLocation();
     const createCircle = circleFactory(group);
 
-    createCircle(this.size.bigDoubleCircle, this.size.doubleCircleStroke, anchorLocation);
-    createCircle(this.size.smallDoubleCircle, this.size.doubleCircleStroke, anchorLocation);
+    createCircle(this.size.bigDoubleCircle, this.size.doubleCircleStroke, this.doubleCircleAnchorLocation);
+    createCircle(this.size.smallDoubleCircle, this.size.doubleCircleStroke, this.doubleCircleAnchorLocation);
   }
 
   private createWideCircle(): void {
     const group: GroupSelection = this.group.append('g').classed('double-circle__wide-circle', true);
-    const anchorLocation: [number, number] = this.createWideCircleAnchorLocation();
     const createCircle = circleFactory(group);
 
-    this.wideCircle = createCircle(this.size.wideCircle, this.size.wideCircleStroke, anchorLocation);
+    this.wideCircle = createCircle(this.size.wideCircle, this.size.wideCircleStroke, this.wideCircleAnchorLocation);
 
-    this.wideCircle.attr('transform-origin', `${this.anchorLocation[0]}px ${this.anchorLocation[1]}px`);
-  }
-
-  private createDoubleCircleAnchorLocation(): [number, number] {
-    return calculateAnchorLocation(Anchor.center, [0, 0], [this.width, this.height]);
-  }
-
-  private createWideCircleAnchorLocation(): [number, number] {
-    const smallCircleXLocation: number = calculateX(Anchor.center, this.anchorLocation[0], this.size.smallDoubleCircle);
-  const xLocation: number = smallCircleXLocation + this.size.smallDoubleCircle;
-  const xAnchorLocation: number = calculateAnchorX(Anchor.center, xLocation, this.size.wideCircle);
-
-  return [xAnchorLocation, this.anchorLocation[1]];
+    defineOrigin(this.wideCircle, this.anchorLocation);
   }
 
   private handleCursorMove(): void {
@@ -74,6 +77,6 @@ export class DoubleCircle extends Sample {
   private rotate(circle: CircleSelection, cursorLocation: [number, number], origin: [number, number]): void {
     const angleFromCenter: number = getAngle(cursorLocation, origin);
 
-    circle.attr('transform', `rotate(${angleFromCenter})`);
+    circle.transform('rotate', angleFromCenter);
   }
 }

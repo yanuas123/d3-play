@@ -1,0 +1,20 @@
+@use '../constants' as *;
+
+.sliding-slices {
+  &__basic-slice {
+    fill: $primary-color;
+  }
+
+  &__sliding-slice {
+    stroke: $back-color;
+    fill: none;
+
+    &--to-left {
+      transition: transform 0.2s linear;
+    }
+
+    &--to-right {
+      transition: transform 2s ease-out;
+    }
+  }
+}

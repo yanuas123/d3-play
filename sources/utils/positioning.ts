@@ -122,3 +122,9 @@ export function getAxisForContain(container: [number, number], size: [number, nu
 
   return xSizeDifference < ySizeDifference ? 0 : 1;
 }
+
+export function getFromCenterOffsetHorizontalDirection(location: number, width: number): 'left' | 'right' {
+  const center: number = width / 2;
+
+  return location < center ? 'left' : 'right';
+}
