@@ -1,4 +1,4 @@
-import { CircleSelection, GroupSelection, RectSelection, SliceSelection } from "../models/selection";
+import { CircleSelection, EnterSelection, GroupSelection, RectSelection, SliceSelection } from "../models/selection";
 import { TransformFunctions, TransformValueTypes } from '../models/attributes';
 import * as d3 from 'd3';
 
@@ -20,7 +20,7 @@ export function transformControler(): <Func extends TransformFunctions = any>(
     appliedValues.forEach((v: TransformValueTypes[TransformFunctions], k: TransformFunctions) => {
       switch (k) {
         case 'translate':
-          transformations.push(`translate(${v[0]},${v[1]})`);
+          transformations.push(`translate(${v[0]} ${v[1]})`);
           break;
         case 'rotate':
           transformations.push(`rotate(${v})`);
@@ -33,15 +33,35 @@ export function transformControler(): <Func extends TransformFunctions = any>(
   }
 }
 
-export function circleFactory(group: GroupSelection) {
-  return (size: number, strokeSize: number, location: [number, number]): CircleSelection => {
+export function circleFactory(group: GroupSelection | EnterSelection) {
+  return (
+    size: number,
+    strokeSize: number,
+    location: [
+      number | ((d: any) => number),
+      number | ((d: any) => number)
+    ]
+  ): CircleSelection => {
     const radius: number = size / 2;
     const strokeShiftOut: number = strokeSize / 2;
 
     const circle = group.append('circle').attr('stroke-width', strokeSize);
 
-    circle.attr('cx', location[0]);
-    circle.attr('cy', location[1]);
+    if (typeof location[0] === 'number') {
+      circle.attr('cx', location[0]);
+    } else {
+      circle.attr('cx', (d: any) => {
+        return (location[0] as (d: any) => number)(d);
+      });
+    }
+
+    if (typeof location[1] === 'number') {
+      circle.attr('cy', location[1]);
+    } else {
+      circle.attr('cy', (d: any) => {
+        return (location[1] as (d: any) => number)(d);
+      });
+    }
 
     circle.attr('r', radius - strokeShiftOut);
 
@@ -53,14 +73,34 @@ export function circleFactory(group: GroupSelection) {
   };
 }
 
-export function rectFactory(group: GroupSelection) {
-  return (size: [number, number], strokeSize: number, location: [number, number]): RectSelection => {
+export function rectFactory(group: GroupSelection | EnterSelection) {
+  return (
+    size: [number, number],
+    strokeSize: number,
+    location: [
+      number | ((d: any) => number),
+      number | ((d: any) => number)
+    ]
+  ): RectSelection => {
     const strokeShiftOut: number = strokeSize / 2;
 
     const rect = group.append('rect').attr('stroke-width', strokeSize);
 
-    rect.attr('x', location[0] + strokeShiftOut);
-    rect.attr('y', location[1] + strokeShiftOut);
+    if (typeof location[0] === 'number') {
+      rect.attr('x', location[0] + strokeShiftOut);
+    } else {
+      rect.attr('x', (d: any) => {
+        return (location[0] as (d: any) => number)(d) + strokeShiftOut;
+      });
+    }
+
+    if (typeof location[1] === 'number') {
+      rect.attr('y', location[1] + strokeShiftOut);
+    } else {
+      rect.attr('y', (d: any) => {
+        return (location[1] as (d: any) => number)(d) + strokeShiftOut;
+      });
+    }
 
     rect.attr('width', size[0] - strokeSize);
     rect.attr('height', size[1] - strokeSize);

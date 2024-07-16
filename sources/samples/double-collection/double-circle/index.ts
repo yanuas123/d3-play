@@ -1,6 +1,6 @@
+import './index.scss';
 import { CircleSelection, GroupSelection } from '../../../models/selection';
 import { calculateAnchorLocation, calculateAnchorX, calculateX } from '../../../utils/positioning';
-import './index.scss';
 import { Anchor } from '../../../constants/positioning';
 import { circleFactory } from '../../../utils/shapes';
 import { DOUBLE_CIRCLE_ANCHOR, WIDE_CIRCLE_ANCHOR, size } from './constants';

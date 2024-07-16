@@ -128,3 +128,9 @@ export function getFromCenterOffsetHorizontalDirection(location: number, width: 
 
   return location < center ? 'left' : 'right';
 }
+
+export function getFromCenterOffsetVerticalDirection(location: number, height: number): 'top' | 'bottom' {
+  const center: number = height / 2;
+
+  return location < center ? 'top' : 'bottom';
+}

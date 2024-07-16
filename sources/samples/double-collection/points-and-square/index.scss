@@ -1,0 +1,16 @@
+@use '../constants' as *;
+
+.points-and-square {
+  &__square {
+    stroke: $primary-color;
+    fill: none;
+  }
+
+  &__square-element {
+    transition: transform 0.2s linear;
+  }
+
+  &__points {
+    fill: $back-color;
+  }
+}

@@ -1,5 +1,5 @@
-import { RectSelection, GroupSelection } from '../../../models/selection';
 import './index.scss';
+import { RectSelection, GroupSelection } from '../../../models/selection';
 import { rectFactory } from '../../../utils/shapes';
 import { size } from './constants';
 import { CursorEvent } from '../../../models/events';

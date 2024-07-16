@@ -6,6 +6,7 @@ interface SelectionCustomExtension {
 }
 
 export type SvgElementSelection = d3.Selection<SVGGraphicsElement, any, any, any>;
+export type EnterSelection = d3.Selection<d3.EnterElement, any, any, any>
 
 export type GroupSelection = d3.Selection<SVGGElement, any, any, any>;
 

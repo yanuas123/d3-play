@@ -7,6 +7,7 @@ export const sectionsData: SectionTemplateData[] = [{
   links: createLinksDataFromSampleIdentifiers([
     SampleIdentifier.doubleCircle,
     SampleIdentifier.redSquare,
-    SampleIdentifier.slidingSlices
+    SampleIdentifier.slidingSlices,
+    SampleIdentifier.pointsAndSquare
   ])
 }];

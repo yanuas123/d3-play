@@ -1,15 +1,13 @@
-import { CircleSelection, GroupSelection, SliceSelection } from '../../../models/selection';
-import { calculateAnchorLocation, calculateAnchorX, calculateX, getFromCenterOffsetHorizontalDirection } from '../../../utils/positioning';
 import './index.scss';
+import { GroupSelection, SliceSelection } from '../../../models/selection';
+import { calculateAnchorLocation, getFromCenterOffsetHorizontalDirection } from '../../../utils/positioning';
 import { Anchor } from '../../../constants/positioning';
 import { sliceFactory } from '../../../utils/shapes';
 import { BASIC_SLICE_ROTATION, SLIDING_SLICE_ROTATION, size } from './constants';
 import { CursorEvent } from '../../../models/events';
-import { getAngle } from '../../../utils/math';
 import { Sample } from '../../sample';
 import { responsive } from '../../../utils/general';
 import { sliceDiameterProjectionalSize, sliceProjectionalSize } from './utils';
-import { defineOrigin } from '../../../utils/transformation';
 
 export class SlidingSlices extends Sample {
   private readonly anchorLocation: [number, number];
